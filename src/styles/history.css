@@ -1,0 +1,15 @@
+.history {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  font-family: Inter, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 122%;
+  color: #545454;
+  background-color: white;
+  text-align: start;
+}
