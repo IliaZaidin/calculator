@@ -4,25 +4,21 @@ import logo from '../images/logo.jpg';
 function App() {
   const [inputData, setInputData] = React.useState('');
   const [historyData, setHistoryData] = React.useState('');
-  const divisionAndMultiplication = ['*', '/'];
-  const additionAndSubtraction = ['+', '-'];
 
   function doMath(str) {
     let arr = str.split(' ');
 
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === '*') {
-        arr[i - 1] = parseFloat(arr[i - 1]) * parseFloat(arr[i + 1]);
-        arr.splice(i, 2);
-        i--;
-      }
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === '/') {
-        arr[i - 1] = parseFloat(arr[i - 1]) / parseFloat(arr[i + 1]);
-        arr.splice(i, 2);
-        i--;
+      if (arr[i] === '*' || arr[i] === '/') {
+        if (arr[i] === '*') {
+          arr[i - 1] = parseFloat(arr[i - 1]) * parseFloat(arr[i + 1]);
+          arr.splice(i, 2);
+          i--;
+        } else {
+          arr[i - 1] = parseFloat(arr[i - 1]) / parseFloat(arr[i + 1]);
+          arr.splice(i, 2);
+          i--;
+        }
       }
     }
 
@@ -54,7 +50,6 @@ function App() {
       if (inputData[inputData.length - 2] === '+' || inputData[inputData.length - 2] === '-' || inputData[inputData.length - 2] === '*' || inputData[inputData.length - 2] === '/') {
         const temp = inputData.slice(0, -3);
         setInputData(temp);
-        console.log(inputData);
       }
       setInputData(inputData.concat(' ' + event.target.innerText + ' '));
     }
@@ -63,7 +58,7 @@ function App() {
   }
 
   function handleHistoryClick() {
-    if (inputData === '' || inputData[inputData.length] === ' ' )
+    if (inputData === '' || inputData[inputData.length - 1] === ' ')
       setInputData(inputData.concat(historyData));
   }
 
