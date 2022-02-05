@@ -2,8 +2,10 @@ import React from 'react';
 import logo from '../images/logo.jpg';
 
 function App() {
-  const [historyData, setHistoryData] = React.useState('');
   const [inputData, setInputData] = React.useState('');
+  const [historyData, setHistoryData] = React.useState('');
+  const divisionAndMultiplication = ['*', '/'];
+  const additionAndSubtraction = ['+', '-'];
 
   function doMath(str) {
     let arr = str.split(' ');
@@ -39,21 +41,36 @@ function App() {
         i--;
       }
     }
-    console.log(arr[0]);
     return arr[0];
   }
 
-  function handleClick(event) {
+  function handleKeypadClick(event) {
     if (event.target.innerText === '=') {
-      setHistoryData(doMath(inputData));
+      const result = doMath(inputData);
       setInputData('');
+      setHistoryData(result);
     }
-    else if (event.target.innerText === '+' || event.target.innerText === '-' || event.target.innerText === '*' || event.target.innerText === '/')
+    else if (event.target.innerText === '+' || event.target.innerText === '-' || event.target.innerText === '*' || event.target.innerText === '/') {
+      if (inputData[inputData.length - 2] === '+' || inputData[inputData.length - 2] === '-' || inputData[inputData.length - 2] === '*' || inputData[inputData.length - 2] === '/') {
+        const temp = inputData.slice(0, -3);
+        setInputData(temp);
+        console.log(inputData);
+      }
       setInputData(inputData.concat(' ' + event.target.innerText + ' '));
+    }
     else
       setInputData(inputData.concat(event.target.innerText));
   }
 
+  function handleHistoryClick() {
+    if (inputData === '' || inputData[inputData.length] === ' ' )
+      setInputData(inputData.concat(historyData));
+  }
+
+  function handleCancel() {
+    setInputData('');
+    setHistoryData('');
+  }
 
   return (
     <div className="page" >
@@ -64,30 +81,30 @@ function App() {
         </header>
         <main className="main">
           <section className="screen">
-            <button className="history" type="button">{historyData}</button>
-            <h2 className="input">{inputData}</h2>
+            <button className="history" onClick={handleHistoryClick}>Result: {historyData}</button>
+            <h2 className="input">Input: {inputData}</h2>
           </section>
           <section className="keypad">
-            <button className="button" type="button" onClick={handleClick}>7</button>
-            <button className="button" type="button" onClick={handleClick}>8</button>
-            <button className="button" type="button" onClick={handleClick}>9</button>
-            <button className="button" type="button" onClick={handleClick}>/</button>
-            <button className="button" type="button" onClick={handleClick}>4</button>
-            <button className="button" type="button" onClick={handleClick}>5</button>
-            <button className="button" type="button" onClick={handleClick}>6</button>
-            <button className="button" type="button" onClick={handleClick}>*</button>
-            <button className="button" type="button" onClick={handleClick} >1</button>
-            <button className="button" type="button" onClick={handleClick}>2</button>
-            <button className="button" type="button" onClick={handleClick}>3</button>
-            <button className="button" type="button" onClick={handleClick}>-</button>
-            <button className="button" type="button" onClick={handleClick}>0</button>
-            <button className="button" type="button" onClick={handleClick}>.</button>
-            <button className="button" type="button" onClick={handleClick}>=</button>
-            <button className="button" type="button" onClick={handleClick}>+</button>
-            {/* <button className="button" type="button" onClick={handleClick}>(</button> */}
-            {/* <button className="button" type="button" onClick={handleClick}>)</button> */}
-            {/* <button className="button" type="button" onClick={handleClick}>C</button> */}
-            {/* <button className="button" type="button" onClick={handleClick}>&#x2190;</button> */}
+            <button className="button" type="button" onClick={handleKeypadClick}>7</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>8</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>9</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>/</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>4</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>5</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>6</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>*</button>
+            <button className="button" type="button" onClick={handleKeypadClick} >1</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>2</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>3</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>-</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>0</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>.</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>=</button>
+            <button className="button" type="button" onClick={handleKeypadClick}>+</button>
+            {/* <button className="button" type="button" onClick={handleKeypadClick}>&#40;</button>  */}
+            {/* <button className="button" type="button" onClick={handleKeypadClick}>&#41;</button>  */}
+            <button className="button" type="button" onClick={handleCancel}>C</button>
+            {/* <button className="button" type="button" onClick={handleKeypadClick}>&#x2190;</button> */}
           </section>
         </main>
         <footer className="footer">
