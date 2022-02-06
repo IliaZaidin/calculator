@@ -40,10 +40,12 @@ function App() {
 
   function handleKeypadClick(event) {
     if (event.target.innerText === '=') {
-      doMath();
-      setHistoryData(inputData);
-      setInputData([]);
-      setDisplayData('');
+      if (inputData[inputData.length - 1] !== '+' && inputData[inputData.length - 1] !== '-' && inputData[inputData.length - 1] !== '*' && inputData[inputData.length - 1] !== '/') {
+        doMath();
+        setHistoryData(inputData);
+        setInputData([]);
+        setDisplayData('');
+      }
     } else {
       const temp = inputData;
       if (event.target.innerText === '+' || event.target.innerText === '-' || event.target.innerText === '*' || event.target.innerText === '/') {
