@@ -47,6 +47,8 @@ function App() {
     } else {
       const temp = inputData;
       if (event.target.innerText === '+' || event.target.innerText === '-' || event.target.innerText === '*' || event.target.innerText === '/') {
+        if (inputData[inputData.length - 1] === '+' || inputData[inputData.length - 1] === '-' || inputData[inputData.length - 1] === '*' || inputData[inputData.length - 1] === '/')
+          temp.pop();
         temp.push(event.target.innerText);
         setInputData(temp);
         setDisplayData(inputData.join(''));
@@ -86,7 +88,7 @@ function App() {
         </header>
         <main className="main">
           <section className="screen">
-            <button className="history" onClick={handleHistoryClick}>Result: {historyData}</button>
+            <button className="history" onClick={handleHistoryClick}>Result(click to use): {historyData}</button>
             <h2 className="input">Input: {displayData}</h2>
           </section>
           <section className="keypad">
